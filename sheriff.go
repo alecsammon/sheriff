@@ -154,7 +154,7 @@ func Marshal(options *Options, data interface{}) (interface{}, error) {
 		// if there is an anonymous field which is a struct
 		// we want the childs exposed at the toplevel to be
 		// consistent with the embedded json marshaller
-		if val.Kind() == reflect.Ptr {
+		if _, ok := val.Interface().(json.Marshaler); val.Kind() == reflect.Ptr && !ok {
 			val = val.Elem()
 		}
 
